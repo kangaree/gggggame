@@ -1,4 +1,4 @@
-## JS Project Proposal: Gary's Groovy Gravity and Grain Game
+## JS Project Proposal: Gary's Groovy Gravitating Grains Game
 
 ### Background
 

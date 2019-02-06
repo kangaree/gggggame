@@ -1,0 +1,171 @@
+h1 {
+    font-family: 'Freckle Face', cursive;
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 0;
+    
+    background: -webkit-linear-gradient(#eee, #555);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://i.imgur.com/Oy5gVnN.jpg");
+}
+
+main {
+    display: flex;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.buttons button {
+    margin-bottom: 1px;
+}
+
+.buttons *:focus {
+    outline: 0 !important;
+}
+
+.fire-button {
+    background-color: red;
+    border-color: red;
+    color: yellow;
+    border-radius: 5px;
+}
+
+.fire-button:active {
+    background-color: rgb(160, 0, 0);
+    border-color: rgb(160, 0, 0);
+    color: rgb(143, 143, 0);
+    border-radius: 5px;
+}
+
+.sand-button {
+    background-color: sandybrown;
+    border-color: sandybrown;
+    color: rgb(128, 33, 33);
+    border-radius: 5px;
+}
+
+.sand-button:active {
+    background-color: rgb(161, 109, 62);
+    border-color: rgb(161, 109, 62);
+    color: rgb(90, 23, 23);
+    border-radius: 5px;
+}
+
+.torch-button {
+    background-color: orangered;
+    border-color: orangered;
+    color: black;
+    border-radius: 5px;
+}
+
+.torch-button:active {
+    background-color: rgb(160, 43, 0);
+    border-color: rgb(160, 43, 0);
+    color: black;
+    border-radius: 5px;
+}
+
+.wall-button {
+    background-color: gray;
+    border-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+.wall-button:active {
+    background-color: rgb(80, 80, 80);
+    border-color: rgb(80, 80, 80);
+    color: rgb(184, 184, 184);
+    border-radius: 5px;
+}
+
+.plant-button {
+    background-color: green;
+    border-color: green;
+    color: white;
+    border-radius: 5px;
+}
+
+.plant-button:active {
+    background-color: rgb(0, 99, 0);
+    border-color: rgb(0, 99, 0);
+    color: rgb(184, 184, 184);
+    border-radius: 5px;
+}
+
+.oil-button {
+    background-color: rgb(34, 34, 34);
+    border-color: black;
+    color: white;
+    border-radius: 5px;
+}
+
+.oil-button:active {
+    background-color: black;
+    border-color: black;
+    color: white;
+    border-radius: 5px;
+}
+
+.water-button {
+    background-color: turquoise;
+    border-color: turquoise;
+    color: blue;
+    border-radius: 5px;
+}
+
+.water-button:active {
+    background-color: rgb(51, 179, 166);
+    border-color: rgb(51, 179, 166);
+    color: rgb(2, 2, 190);
+    border-radius: 5px;
+}
+
+.spout-button {
+    background-color: turquoise;
+    border-color: turquoise;
+    color: black;
+    border-radius: 5px;
+}
+
+.spout-button:active {
+    background-color: rgb(51, 179, 166);
+    border-color: rgb(51, 179, 166);
+    color: black;
+    border-radius: 5px;
+}
+
+.eraser-button {
+    background-color: white;
+    border-color: gray;
+    color: black;
+    border-radius: 5px;
+}
+
+.eraser-button:active {
+    background-color: rgb(223, 223, 223);
+    border-color: gray;
+    color: black;
+    border-radius: 5px;
+}
+
+canvas {
+    background-color: black;
+    border-radius: 8px;
+}
