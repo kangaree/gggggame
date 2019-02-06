@@ -4,8 +4,6 @@
     <title>Gravitating Grains Game</title>
 
     <!-- <script src="./grain.js"></script> -->
-    <!-- <script type="text/javascript">
-    </script> -->
 
     <link href="https://fonts.googleapis.com/css?family=Freckle+Face" rel="stylesheet">
     <link rel="stylesheet" href="./css/main.css" media="screen" title="no title" charset="utf-8">
@@ -27,7 +25,7 @@
             <button class="torch-button">Torch</button>
         </div>
         
-        <canvas id="canvas1" width="1000" height="600"></canvas>
+        <canvas id="myCanvas" width="1000" height="600"></canvas>
 
         <div class="buttons">
             <button>Gravity</button>
@@ -40,7 +38,16 @@
             <button>About</button>
         </div>
 
+        <script type="text/javascript">
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
 
+            ctx.beginPath();
+            ctx.arc(500, 250, 20, 0, Math.PI * 2, false);
+            ctx.fillStyle = "green";
+            ctx.fill();
+            ctx.closePath();
+        </script>
 
     </main>
 
