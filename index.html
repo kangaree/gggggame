@@ -7,29 +7,159 @@
 
     <link href="https://fonts.googleapis.com/css?family=Freckle+Face" rel="stylesheet">
     <link rel="stylesheet" href="./css/main.css" media="screen" title="no title" charset="utf-8">
+            
+    <script type="text/javascript">   
+        
+        var canvas, ctx, flag = false,
+                prevX = 0,
+                currX = 0,
+                prevY = 0,
+                currY = 0,
+                dot_flag = false;
+
+            var x = "white",
+                y = 2;
+
+            function init() {
+                canvas = document.getElementById('myCanvas');
+                ctx = canvas.getContext("2d");
+                w = canvas.width;
+                h = canvas.height;
+
+                canvas.addEventListener("mousemove", function (e) {
+                    findxy('move', e)
+                }, false);
+                canvas.addEventListener("mousedown", function (e) {
+                    findxy('down', e)
+                }, false);
+                canvas.addEventListener("mouseup", function (e) {
+                    findxy('up', e)
+                }, false);
+                canvas.addEventListener("mouseout", function (e) {
+                    findxy('out', e)
+                }, false);
+            }
+
+            function color(obj) {
+                switch (obj.id) {
+                    case "green":
+                        x = "green";
+                        break;
+                    case "blue":
+                        x = "blue";
+                        break;
+                    case "red":
+                        x = "red";
+                        break;
+                    case "yellow":
+                        x = "yellow";
+                        break;
+                    case "orange":
+                        x = "orange";
+                        break;
+                    case "black":
+                        x = "black";
+                        break;
+                    case "white":
+                        x = "white";
+                        break;
+                }
+
+                // if you select white, make a bigger eraser
+                // if (x == "white") y = 14;
+                // else y = 2;
+
+                // y = 2;
+
+                if (x == "black") y = 14;
+                else y = 2;
+
+            }
+
+            function draw() {
+                ctx.beginPath();
+                ctx.moveTo(prevX, prevY);
+                ctx.lineTo(currX, currY);
+                ctx.strokeStyle = x;
+                ctx.lineWidth = y;
+                ctx.stroke();
+                ctx.closePath();
+            }
+
+            function erase() {
+                // var m = confirm("Want to clear");
+                // if (m) {
+                //     ctx.clearRect(0, 0, w, h);
+                //     document.getElementById("canvasimg").style.display = "none";
+                // }
+
+                ctx.clearRect(0, 0, w, h);
+                document.getElementById("canvasimg").style.display = "none";
+            }
+
+            function save() {
+                document.getElementById("canvasimg").style.border = "2px solid";
+                var dataURL = canvas.toDataURL();
+                document.getElementById("canvasimg").src = dataURL;
+                document.getElementById("canvasimg").style.display = "inline";
+            }
+
+            function findxy(res, e) {
+                if (res == 'down') {
+                    prevX = currX;
+                    prevY = currY;
+                    currX = e.clientX - canvas.offsetLeft;
+                    currY = e.clientY - canvas.offsetTop;
+
+                    flag = true;
+                    dot_flag = true;
+                    if (dot_flag) {
+                        ctx.beginPath();
+                        ctx.fillStyle = x;
+                        ctx.fillRect(currX, currY, 2, 2);
+                        ctx.closePath();
+                        dot_flag = false;
+                    }
+                }
+                if (res == 'up' || res == "out") {
+                    flag = false;
+                }
+                if (res == 'move') {
+                    if (flag) {
+                        prevX = currX;
+                        prevY = currY;
+                        currX = e.clientX - canvas.offsetLeft;
+                        currY = e.clientY - canvas.offsetTop;
+                        draw();
+                    }
+                }
+            }
+
+    </script>
 </head>
 
-<body>
+<body onLoad="init()">
     <h1>Gary's Groovy Gravitating Grains Game</h1>
     <main>
 
         <div class="buttons">
-            <button class="wall-button">Wall</button>
-            <button class="eraser-button">Eraser</button>
-            <button class="sand-button">Sand</button>
-            <button class="water-button">Water</button>
-            <button class="oil-button">Oil</button>
-            <button class="plant-button">Plant</button>
-            <button class="fire-button">Fire</button>
-            <button class="spout-button">Spout</button>
-            <button class="torch-button">Torch</button>
+            <button class="wall-button" id="white" onclick="color(this)">Wall</button>
+            <button class="eraser-button" id="black" onclick="color(this)">Eraser</button>
+            <button class="sand-button" id="yellow" onclick="color(this)">Sand</button>
+            <button class="water-button" id="blue" onclick="color(this)">Water</button>
+            <button class="oil-button" id="orange" onclick="color(this)">Oil</button>
+            <button class="plant-button" id="green" onclick="color(this)">Plant</button>
+            <button class="fire-button" id="red" onclick="color(this)">Fire</button>
+            <button class="spout-button" id="blue" onclick="color(this)">Spout</button>
+            <button class="torch-button" id="red" onclick="color(this)">Torch</button>
         </div>
         
-        <canvas id="myCanvas" width="1000" height="600"></canvas>
+        <canvas id="myCanvas" width="700" height="420"></canvas>
 
         <div class="buttons">
             <button>Gravity</button>
-            <button>Reset</button>
+            <button onclick="save()">Save</button>
+            <button onclick="erase()">Reset</button>
             <br>
             <button>Large</button>
             <button>Medium</button>
@@ -37,17 +167,6 @@
             <br>
             <button>About</button>
         </div>
-
-        <script type="text/javascript">
-            let canvas = document.getElementById("myCanvas");
-            let ctx = canvas.getContext("2d");
-
-            ctx.beginPath();
-            ctx.arc(500, 250, 20, 0, Math.PI * 2, false);
-            ctx.fillStyle = "green";
-            ctx.fill();
-            ctx.closePath();
-        </script>
 
     </main>
 
