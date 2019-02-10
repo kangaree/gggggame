@@ -2,6 +2,7 @@ const ParticleType = {
     // Hexadecimal
     EMPTY: 0x000000, 
     SAND: 0xf4a460,
+    WALL: 0x808080,
 };
 
 class Particle {
@@ -10,6 +11,7 @@ class Particle {
         switch (p) {
             case ParticleType.EMPTY:
             case ParticleType.SAND:
+            case ParticleType.WALL:
                 valid = true;
             default:
                 break;
