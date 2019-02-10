@@ -8,6 +8,7 @@ const ParticleType = {
     // This is necessary because the least significant bit is in the blue part of the hexadecimal
     WATER: 0x0000ff & 0xfffffe, 
     STEAM : 0x00bfff & 0xfffffe,
+    OIL: 0x26142A,
 };
 
 class Particle {
@@ -20,6 +21,7 @@ class Particle {
             case ParticleType.FIRE:
             case ParticleType.WATER:
             case ParticleType.STEAM:
+            case ParticleType.OIL:
                 valid = true;
             default:
                 break;
@@ -33,6 +35,7 @@ class Particle {
         switch (p) {
             case ParticleType.SAND:
             case ParticleType.WATER:
+            case ParticleType.OIL:
                 liquid = true;
             default:
                 break;
@@ -92,6 +95,9 @@ class Particle {
                     case ParticleType.WATER:
                         // Boil
                         return [ParticleType.FIRE, ParticleType.STEAM];
+                    case ParticleType.OIL:
+                        // Burn
+                        return [ParticleType.FIRE, ParticleType.FIRE];
                     default:
                         break;
                 }
