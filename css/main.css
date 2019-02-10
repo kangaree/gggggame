@@ -241,3 +241,18 @@ canvas {
     color: white;
     border-radius: 5px;
 }
+
+
+button {
+    background-color: gray;
+    border-color: gray;
+    color: white;
+    border-radius: 5px;
+}
+
+button:active {
+    background-color: rgb(80, 80, 80);
+    border-color: rgb(80, 80, 80);
+    color: rgb(184, 184, 184);
+    border-radius: 5px;
+}
