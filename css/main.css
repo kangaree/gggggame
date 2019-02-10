@@ -4,7 +4,7 @@ h1 {
     font-size: 50px;
     margin-bottom: 0;
     
-    background: -webkit-linear-gradient(#eee, #555);
+    background: -webkit-linear-gradient(#eee, #777);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
