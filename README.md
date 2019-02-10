@@ -23,7 +23,7 @@ With the GGGGGame, users will be able to:
 
 In addition, this project will include:
 
-- [ ] An About modal describing the background and rules of the game
+- [ ] An about modal describing the background and rules (there are no rules!) of the game
 - [ ] A production README
 
 ### Wireframes
@@ -49,45 +49,54 @@ In addition to the entry file, there will be one script involved in this project
 
 `grain.js`: this script will handle elements and the sandbox logic.
 
-#### How To Make a “Falling Sand” Style Water Simulation
-How do we implement falling sand or liquid? 
+#### Gravity
+How do we implement "falling" sand or liquid? 
 
-Physics can be simple. Particles are bound by gravity:
+The physics can be simple- particles are bound by gravity:
 * If there is empty space below, move down.
-* If there is empty space down and to the left or right, move down and left or right.
+* If there is empty space down and to the left or down and to the right, move down and left or down and right.
 
 We can think of the canvas as a two dimensional array of "elements". 
 
-The array will be looped through until every element has gravity applied to it.
+The array will be looped through until every element has had gravity applied to it.
 
 There are two complications:
-* If a particle cannot move directly down, but can move both down and to the left or down and to the right, then the particle must randomly pick this direction.
+* If a particle cannot move directly down, but can move both down and to the left or down and to the right, then the particle should not default to the left, it should randomly pick between left and right.
 * We need to know if a particle has been updated in a frame (i.e., simulation step). Otherwise, particles can "teleport". Say a sand particle is at pos(0,0). When we first apply gravity to it, it will switch with the empty particle at pos(0,1). Then, when we loop through the second row, and for all lower rows that are empty, it will swap to a lower position. This happens before the entire frame is finished, and when the frame is over, the sand particle hits the ground immediately. We need to skip over a particle if it has already been updated.
 
-Many thanks to W-Shadow for helping me understand how to implement this: https://w-shadow.com/blog/2009/09/29/falling-sand-style-water-simulation/
+W-Shadow's Guide: https://w-shadow.com/blog/2009/09/29/falling-sand-style-water-simulation/
+
+#### Hexadecimals and Bitwise Operators
+W-Shadow suggests using a byte or char as the array element datatype, rather than a string or an integer. This is for size and speed.
+
+Particles are represented as a hexadecimal number, which corresponds to its color. This hexadecimal number needs to be converted into RGB values when working with the canvas. 
+
+In order to identify which particles have been updated, we flip the least significant bit of the particle every frame.
+
+JavaScript stores numbers as 64 bits floating point numbers, but all bitwise operations are performed on 32 bits binary numbers. Before a bitwise operation is performed, JavaScript converts numbers to 32 bits signed integers. After the bitwise operation is performed, the result is converted back to 64 bits JavaScript numbers.
+
+The operators are AND, OR, XOR, NOT, zero fill left shift, and signed right shift.
 
 ### Implementation Timeline
 
 **Day 1**: Create a basic canvas element that you can draw on. Goals for the day:
 
 - HTML/CSS Skeleton.
-- Click and sand and will appear. 
+- Click and sand will appear. 
 - Make an eraser element.
 
-**Day 2**: Gravity. Pause, play, and reset buttons. Brush size buttons. Goals for the day:
+**Day 2**: Gravity. Reset button. Brush size buttons. Goals for the day:
 
 - Drop sand and it will fall to the ground. Sand will pile up on each other.
-- Implement pause, play, and reset.
 - Create buttons to change brush size.
 
 **Day 3**: Create elements with different properties.
 
-- Wall, Water, Plant, Fire, Oil, Ice, and Gas.
+- Wall, Sand, Water, Oil, Plant, and Fire.
 
-**Day 4**: Style the frontend, making it polished and professional.  Goals for the day:
+**Day 4**: Style the frontend, making it polished and professional. Goals for the day:
 
 - Create an About modal.
-
 
 ### Bonus features
 
@@ -95,4 +104,4 @@ Some anticipated updates are:
 
 - [ ] Save and load board states
 - [ ] Different speeds
-- [ ] Add a "person" element that can move around the board
+- [ ] Add a "person" element that can move around the sandbox
