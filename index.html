@@ -17,8 +17,11 @@
                 currY = 0,
                 dot_flag = false;
 
+        // let style = "white",
+        //     strokeWidth = 2;
+
         let style = "white",
-            lineWidth = 2;
+            strokeWidth = 30;
 
         function init() {
             canvas = document.getElementById('myCanvas');
@@ -66,13 +69,13 @@
             }
 
             // if you select white, make a bigger eraser
-            // if (style == "white") lineWidth = 14;
-            // else lineWidth = 2;
+            // if (style == "white") strokeWidth = 14;
+            // else strokeWidth = 2;
 
-            // lineWidth = 2;
+            // strokeWidth = 2;
 
-            if (style == "black") lineWidth = 14;
-            else lineWidth = 2;
+            if (style == "black") strokeWidth = 42;
+            else strokeWidth = 30;
 
         }
 
@@ -81,7 +84,10 @@
             ctx.moveTo(prevX, prevY);
             ctx.lineTo(currX, currY);
             ctx.strokeStyle = style;
-            ctx.lineWidth = lineWidth;
+
+            ctx.lineCap = "round";
+
+            ctx.strokeWidth = strokeWidth;
             ctx.stroke();
             ctx.closePath();
         }
