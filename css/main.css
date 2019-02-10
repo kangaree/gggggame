@@ -54,6 +54,7 @@ main {
 }
 
 .sand-button {
+    /* background-color: #f4a460; */
     background-color: sandybrown;
     border-color: sandybrown;
     color: rgb(128, 33, 33);

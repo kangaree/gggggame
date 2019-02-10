@@ -1,170 +1,165 @@
 <html>
 
-<head>
-    <title>Gravitating Grains Game</title>
+    <head>
+        <title>Gravitating Grains Game</title>
 
-    <!-- <script src="./grain.js"></script> -->
+        <link href="https://fonts.googleapis.com/css?family=Freckle+Face" rel="stylesheet">
+        <link rel="stylesheet" href="./css/main.css" media="screen" title="no title" charset="utf-8">
 
-    <link href="https://fonts.googleapis.com/css?family=Freckle+Face" rel="stylesheet">
-    <link rel="stylesheet" href="./css/main.css" media="screen" title="no title" charset="utf-8">
-            
-    <script type="text/javascript">   
-        
-        let canvas, ctx, flag = false,
-            prevX = 0,
-            currX = 0,
-            prevY = 0,
-            currY = 0,
-            dot_flag = false;
+        <script src="./grain.js"></script>
+        <script type="text/javascript">
 
-        // let style = "white",
-        //     lineWidth = 2;
+        // Default Particle Pen
+        let particleSelectionString = "sand";
+        let particleSize = 15;
 
-        let style = "white",
-            lineWidth = 30;
+        window.onload = function () {
+            let canvas = document.getElementById("myCanvas");
 
-        function init() {
-            canvas = document.getElementById('myCanvas');
-            ctx = canvas.getContext("2d");
-            w = canvas.width;
-            h = canvas.height;
+            grainbox = new Grainbox(canvas);
 
-            canvas.addEventListener("mousemove", function (e) {
-                findxy('move', e)
-            }, false);
-            canvas.addEventListener("mousedown", function (e) {
-                findxy('down', e)
-            }, false);
-            canvas.addEventListener("mouseup", function (e) {
-                findxy('up', e)
-            }, false);
-            canvas.addEventListener("mouseout", function (e) {
-                findxy('out', e)
-            }, false);
+            penX = -1;
+            penY = -1;
+            oldPenX = -1;
+            oldPenY = -1;
+            mouseIsDown = false;
+
+            canvas.addEventListener("mousedown", mouseDown);
+            canvas.addEventListener("mouseup", mouseUp);
+            canvas.addEventListener("mousemove", mouseMove);
+
+            window.requestAnimationFrame(draw);
         }
 
-        function color(obj) {
+
+        function mouseDown(event) {
+            let x = event.x;
+            let y = event.y;
+
+            let canvas = document.getElementById("myCanvas");
+
+            x -= canvas.getBoundingClientRect().left;
+            y -= canvas.getBoundingClientRect().top;
+
+            penX = x;
+            penY = y;
+
+            mouseIsDown = true;
+        }
+
+        function mouseUp(event) {
+            penX = -1;
+            penY = -1;
+
+            mouseIsDown = false;
+        }
+
+        function mouseMove(event) {
+            let x = event.x;
+            let y = event.y;
+
+            let canvas = document.getElementById("myCanvas");
+
+            x -= canvas.getBoundingClientRect().left;
+            y -= canvas.getBoundingClientRect().top;
+
+            penX = x;
+            penY = y;
+        }
+        
+        function particleSelection(obj) {
             switch (obj.id) {
-                case "green":
-                    style = "green";
-                    break;
-                case "blue":
-                    style = "blue";
-                    break;
-                case "red":
-                    style = "red";
-                    break;
-                case "yellow":
-                    style = "yellow";
-                    break;
-                case "orange":
-                    style = "orange";
-                    break;
-                case "black":
-                    style = "black";
-                    break;
-                case "white":
-                    style = "white";
-                    break;
+                case "empty":
+                particleSelectionString = "empty";
+                break;
+                case "sand":
+                particleSelectionString = "sand";
+                break;
             }
-
-            if (style == "black") lineWidth = 42;
-            else lineWidth = 30;
-
+        }
+        
+        function sizeSelection(obj) {
+            particleSize = obj.id;
+        }
+        
+        function erase() {
+            grainbox.erase();
         }
 
         function draw() {
-            ctx.beginPath();
-            ctx.moveTo(prevX, prevY);
-            ctx.lineTo(currX, currY);
-            ctx.strokeStyle = style;
 
-            ctx.lineCap = "round";
+            grainbox.update();
 
-            ctx.lineWidth = lineWidth;
-            ctx.stroke();
-            ctx.closePath();
-        }
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
+            ctx.putImageData(grainbox.imageData, 0, 0);
 
-        function erase() {
-            ctx.clearRect(0, 0, w, h);
-            document.getElementById("canvasimg").style.display = "none";
-        }
+            let penSize = particleSize;
 
-        function save() {
-            document.getElementById("canvasimg").style.border = "2px solid";
-            // TODO: investigate what toDataURL does
-            var dataURL = canvas.toDataURL();
-            document.getElementById("canvasimg").src = dataURL;
-            document.getElementById("canvasimg").style.display = "inline";
-        }
-
-        function findxy(res, e) {
-            if (res == 'down') {
-                prevX = currX;
-                prevY = currY;
-                currX = e.clientX - canvas.offsetLeft;
-                currY = e.clientY - canvas.offsetTop;
-
-                flag = true;
-                dot_flag = true;
-                if (dot_flag) {
-                    ctx.beginPath();
-                    ctx.fillStyle = style;
-                    ctx.fillRect(currX, currY, 2, 2);
-                    ctx.closePath();
-                    dot_flag = false;
+            if (mouseIsDown) {
+                let particleType = ParticleType[particleSelectionString.toUpperCase()];
+                grainbox.pen = particleType;
+                let color = particleType.toString(16);
+                while (color.length < 6) {
+                    // Put zeroes before if less than 6 digits (hexadecimal color value)
+                    color = "0" + color;
                 }
-            }
-            if (res == 'up' || res == "out") {
-                flag = false;
-            }
-            if (res == 'move') {
-                if (flag) {
-                    prevX = currX;
-                    prevY = currY;
-                    currX = e.clientX - canvas.offsetLeft;
-                    currY = e.clientY - canvas.offsetTop;
-                    draw();
+                ctx.strokeStyle = "#" + color;
+
+                ctx.lineCap = "round";
+                ctx.lineWidth = penSize;
+                ctx.beginPath();
+                if (oldPenX == -1 && oldPenY == -1) {
+                    ctx.moveTo(penX, penY);
+                } else {
+                    ctx.moveTo(oldPenX, oldPenY);
                 }
+                ctx.lineTo(penX, penY);
+                ctx.stroke();
+
+                grainbox.setImageData(ctx.getImageData(0, 0, canvas.width, canvas.height));
             }
+
+            oldPenX = penX;
+            oldPenY = penY;
+
+            window.requestAnimationFrame(draw);
         }
+        </script>
+    </head>
 
-    </script>
-</head>
+    <body>
+        <h1>Gary's Groovy Gravitating Grains Game</h1>
+        <main>
 
-<body onLoad="init()">
-    <h1>Gary's Groovy Gravitating Grains Game</h1>
-    <main>
+            <div class="buttons">
+                <button class="wall-button" id="wall" onclick="particleSelection(this)">Wall</button>
+                <button class="eraser-button" id="empty" onclick="particleSelection(this)">Eraser</button>
+                <button class="sand-button" id="sand" onclick="particleSelection(this)">Sand</button>
+                <button class="water-button" id="water" onclick="particleSelection(this)">Water</button>
+                <button class="oil-button" id="oil" onclick="particleSelection(this)">Oil</button>
+                <button class="plant-button" id="plant" onclick="particleSelection(this)">Plant</button>
+                <button class="fire-button" id="fire" onclick="particleSelection(this)">Fire</button>
+                <button class="spout-button" id="spout" onclick="particleSelection(this)">Spout</button>
+                <button class="torch-button" id="torch" onclick="particleSelection(this)">Torch</button>
+            </div>
+            
+            <canvas id="myCanvas" width="700" height="420"></canvas>
 
-        <div class="buttons">
-            <button class="wall-button" id="white" onclick="color(this)">Wall</button>
-            <button class="eraser-button" id="black" onclick="color(this)">Eraser</button>
-            <button class="sand-button" id="yellow" onclick="color(this)">Sand</button>
-            <button class="water-button" id="blue" onclick="color(this)">Water</button>
-            <button class="oil-button" id="orange" onclick="color(this)">Oil</button>
-            <button class="plant-button" id="green" onclick="color(this)">Plant</button>
-            <button class="fire-button" id="red" onclick="color(this)">Fire</button>
-            <button class="spout-button" id="blue" onclick="color(this)">Spout</button>
-            <button class="torch-button" id="red" onclick="color(this)">Torch</button>
-        </div>
-        
-        <canvas id="myCanvas" width="700" height="420"></canvas>
+            <div class="buttons">
+                <button>Gravity</button>
+                <button onclick="save()">Save</button>
+                <button onclick="erase()">Reset</button>
+                <br>
+                <button class="large-pen-button" id="42" onclick="sizeSelection(this)">Large</button>
+                <button class="medium-pen-button" id="15" onclick="sizeSelection(this)">Medium</button>
+                <button class="small-pen-button" id="5" onclick="sizeSelection(this)">Small</button>
+                <br>
+                <button>About</button>
+            </div>
 
-        <div class="buttons">
-            <button>Gravity</button>
-            <button onclick="save()">Save</button>
-            <button onclick="erase()">Reset</button>
-            <br>
-            <button>Large</button>
-            <button>Medium</button>
-            <button>Small</button>
-            <br>
-            <button>About</button>
-        </div>
+        </main>
 
-    </main>
-
-</body>
+    </body>
 
 </html>
