@@ -4,6 +4,8 @@ const ParticleType = {
     SAND: 0xf4a460,
     WALL: 0x808080,
     FIRE: 0xff0000,
+    // Flip the last bit so it can be used as a flag for if the particle has been updated
+    WATER: 0x0000ff & 0xfffffe, 
 };
 
 class Particle {
@@ -14,6 +16,7 @@ class Particle {
             case ParticleType.SAND:
             case ParticleType.WALL:
             case ParticleType.FIRE:
+            case ParticleType.WATER:
                 valid = true;
             default:
                 break;
@@ -26,6 +29,7 @@ class Particle {
         let liquid = false;
         switch (p) {
             case ParticleType.SAND:
+            case ParticleType.WATER:
                 liquid = true;
             default:
                 break;
