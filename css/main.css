@@ -170,3 +170,17 @@ canvas {
     background-color: black;
     border-radius: 8px;
 }
+
+.steam-button {
+    background-color: turquoise;
+    border-color: turquoise;
+    color: blue;
+    border-radius: 5px;
+}
+
+.steam-button:active {
+    background-color: rgb(51, 179, 166);
+    border-color: rgb(51, 179, 166);
+    color: rgb(2, 2, 190);
+    border-radius: 5px;
+}

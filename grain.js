@@ -5,7 +5,9 @@ const ParticleType = {
     WALL: 0x808080,
     FIRE: 0xff0000,
     // Flip the last bit so it can be used as a flag for if the particle has been updated
+    // This is necessary because the least significant bit is in the blue part of the hexadecimal
     WATER: 0x0000ff & 0xfffffe, 
+    STEAM : 0x00bfff & 0xfffffe,
 };
 
 class Particle {
@@ -17,6 +19,7 @@ class Particle {
             case ParticleType.WALL:
             case ParticleType.FIRE:
             case ParticleType.WATER:
+            case ParticleType.STEAM:
                 valid = true;
             default:
                 break;
@@ -42,6 +45,7 @@ class Particle {
         let gas = false;
         switch (p) {
             case ParticleType.FIRE:
+            case ParticleType.STEAM:
                 gas = true;
             default:
                 break;
@@ -68,6 +72,11 @@ class Particle {
                     return ParticleType.EMPTY;
                 }
                 break;
+            case ParticleType.STEAM:
+                if (Math.random() < 0.01) {
+                    // Condense
+                    return ParticleType.WATER;
+                }
             default:
                 break;
         }
@@ -77,6 +86,18 @@ class Particle {
 
     static getInteraction(p, q) {
         switch (p) {
+
+            case ParticleType.FIRE:
+                switch (q) {
+                    case ParticleType.WATER:
+                        // Boil
+                        return [ParticleType.FIRE, ParticleType.STEAM];
+                    default:
+                        break;
+                }
+                break;
+
+
             default:
                 break;
         }
@@ -302,7 +323,7 @@ class Grainbox {
         // Clear the outer edges
         for (let x = 0; x < this.width; x++) {
             this.setParticle(x, 0, ParticleType.EMPTY);
-            this.setParticle(x, this.height - 1, ParticleType.SAND);
+            this.setParticle(x, this.height - 1, ParticleType.WALL);
         }
         for (let y = 0; y < this.height; y++) {
             this.setParticle(0, y, ParticleType.EMPTY);
