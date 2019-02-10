@@ -3,6 +3,7 @@ const ParticleType = {
     EMPTY: 0x000000, 
     SAND: 0xf4a460,
     WALL: 0x808080,
+    FIRE: 0xff0000,
 };
 
 class Particle {
@@ -12,6 +13,7 @@ class Particle {
             case ParticleType.EMPTY:
             case ParticleType.SAND:
             case ParticleType.WALL:
+            case ParticleType.FIRE:
                 valid = true;
             default:
                 break;
@@ -35,6 +37,8 @@ class Particle {
     static isGas(p) {
         let gas = false;
         switch (p) {
+            case ParticleType.FIRE:
+                gas = true;
             default:
                 break;
         }
@@ -54,6 +58,12 @@ class Particle {
 
     static getAction(p) {
         switch (p) {
+            case ParticleType.FIRE:
+                if (Math.random() < 0.05) {
+                    // Dissipate
+                    return ParticleType.EMPTY;
+                }
+                break;
             default:
                 break;
         }
