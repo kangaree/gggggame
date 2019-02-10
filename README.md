@@ -2,7 +2,7 @@
 
 ### Background
 
-GGGGGame is a falling sand game. A falling sand game is a type of particle simulation game. They allow the user to place particles of different elements on a "canvas". The particles can interact with other particles in various ways, and may be affected by gravity. Many complex effects may be achieved. Many versions of the Falling Sand Game have been written since its introduction as a web-based Java applet on the Dofi-Blog in 2005.
+GGGGGame is a falling sand game. A falling sand game is a type of particle simulation game. They allow the user to place particles of different elements on a "canvas". The particles can interact with other particles in various ways, and may be affected by gravity. Many versions of the falling sand game have been written since its introduction as a web-based Java applet on the Dofi-Blog in 2005.
 
 Examples: 
 https://sandspiel.club/
@@ -45,23 +45,38 @@ This project will be implemented with the following technologies:
 - `JavaScript` for game logic,
 - `Canvas` with `HTML5` for effects rendering
 
-In addition to the entry file, there will be three scripts involved in this project:
+In addition to the entry file, there will be one script involved in this project:
 
-`board.js`: this script will handle the logic for creating and updating the grains and rendering them to the DOM.
+`grain.js`: this script will handle elements and the sandbox logic.
 
-`elements.js`: this script will handle the different properties of each element- `color`, `weight`, `infect`, etc.
+#### How To Make a “Falling Sand” Style Water Simulation
+How do we implement falling sand or liquid? 
 
-`state.js`: this will house several initial states, or "playgrounds".
+Physics can be simple. Particles are bound by gravity:
+* If there is empty space below, move down.
+* If there is empty space down and to the left or right, move down and left or right.
+
+We can think of the canvas as a two dimensional array of "elements". 
+
+The array will be looped through until every element has gravity applied to it.
+
+There are two complications:
+* If a particle cannot move directly down, but can move both down and to the left or down and to the right, then the particle must randomly pick this direction.
+* We need to know if a particle has been updated in a frame (i.e., simulation step). Otherwise, particles can "teleport". Say a sand particle is at pos(0,0). When we first apply gravity to it, it will switch with the empty particle at pos(0,1). Then, when we loop through the second row, and for all lower rows that are empty, it will swap to a lower position. This happens before the entire frame is finished, and when the frame is over, the sand particle hits the ground immediately. We need to skip over a particle if it has already been updated.
+
+Many thanks to W-Shadow for helping me understand how to implement this: https://w-shadow.com/blog/2009/09/29/falling-sand-style-water-simulation/
 
 ### Implementation Timeline
 
-**Day 1**: Setup all necessary Node modules, including getting webpack up and running. Write a basic entry file and the bare bones of all scripts outlined above. Create a basic canvas and sand element. Goals for the day:
+**Day 1**: Create a basic canvas element that you can draw on. Goals for the day:
 
-- Drop sand and it will fall to the ground. Sand will pile up on each other.
+- HTML/CSS Skeleton.
+- Click and sand and will appear. 
 - Make an eraser element.
 
-**Day 2**: Pause, play, and reset buttons. Brush size buttons.
+**Day 2**: Gravity. Pause, play, and reset buttons. Brush size buttons. Goals for the day:
 
+- Drop sand and it will fall to the ground. Sand will pile up on each other.
 - Implement pause, play, and reset.
 - Create buttons to change brush size.
 

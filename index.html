@@ -11,17 +11,17 @@
     <script type="text/javascript">   
         
         let canvas, ctx, flag = false,
-                prevX = 0,
-                currX = 0,
-                prevY = 0,
-                currY = 0,
-                dot_flag = false;
+            prevX = 0,
+            currX = 0,
+            prevY = 0,
+            currY = 0,
+            dot_flag = false;
 
         // let style = "white",
-        //     strokeWidth = 2;
+        //     lineWidth = 2;
 
         let style = "white",
-            strokeWidth = 30;
+            lineWidth = 30;
 
         function init() {
             canvas = document.getElementById('myCanvas');
@@ -68,14 +68,8 @@
                     break;
             }
 
-            // if you select white, make a bigger eraser
-            // if (style == "white") strokeWidth = 14;
-            // else strokeWidth = 2;
-
-            // strokeWidth = 2;
-
-            if (style == "black") strokeWidth = 42;
-            else strokeWidth = 30;
+            if (style == "black") lineWidth = 42;
+            else lineWidth = 30;
 
         }
 
@@ -87,18 +81,12 @@
 
             ctx.lineCap = "round";
 
-            ctx.strokeWidth = strokeWidth;
+            ctx.lineWidth = lineWidth;
             ctx.stroke();
             ctx.closePath();
         }
 
         function erase() {
-            // var m = confirm("Want to clear");
-            // if (m) {
-            //     ctx.clearRect(0, 0, w, h);
-            //     document.getElementById("canvasimg").style.display = "none";
-            // }
-
             ctx.clearRect(0, 0, w, h);
             document.getElementById("canvasimg").style.display = "none";
         }
