@@ -256,3 +256,13 @@ button:active {
     color: rgb(184, 184, 184);
     border-radius: 5px;
 }
+
+footer {
+    margin-top: 10px;
+    color: white;
+}
+
+footer a {
+    color: white;
+    font-size: 25px;
+}
