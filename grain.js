@@ -9,6 +9,7 @@ const ParticleType = {
     WATER: 0x0000ff & 0xfffffe, 
     STEAM : 0x00bfff & 0xfffffe,
     OIL: 0x26142A,
+    PLANT: 0x00ff00,
 };
 
 class Particle {
@@ -22,6 +23,7 @@ class Particle {
             case ParticleType.WATER:
             case ParticleType.STEAM:
             case ParticleType.OIL:
+            case ParticleType.PLANT:
                 valid = true;
             default:
                 break;
@@ -96,6 +98,7 @@ class Particle {
                         // Boil
                         return [ParticleType.FIRE, ParticleType.STEAM];
                     case ParticleType.OIL:
+                    case ParticleType.PLANT:
                         // Burn
                         return [ParticleType.FIRE, ParticleType.FIRE];
                     default:
@@ -103,6 +106,15 @@ class Particle {
                 }
                 break;
 
+            case ParticleType.WATER:
+                switch (q) {
+                    case ParticleType.PLANT:
+                        // Grow like a mustard seed
+                        return [ParticleType.PLANT, ParticleType.PLANT];
+                    default:
+                        break;
+                }
+                break;
 
             default:
                 break;
