@@ -93,6 +93,18 @@
                 case "plant":
                     particleSelectionString = "plant";
                     break;
+                case "desert":
+                    particleSelectionString = "desert";
+                    break;
+                case "spout":
+                    particleSelectionString = "spout";
+                    break;
+                case "torch":
+                    particleSelectionString = "torch";
+                    break;
+                case "geyser":
+                    particleSelectionString = "geyser";
+                    break;
             }
         }
         
@@ -153,15 +165,20 @@
             <div class="buttons">
                 <button class="wall-button" id="wall" onclick="particleSelection(this)">Wall</button>
                 <button class="eraser-button" id="empty" onclick="particleSelection(this)">Eraser</button>
+                <br>
                 <button class="sand-button" id="sand" onclick="particleSelection(this)">Sand</button>
                 <button class="water-button" id="water" onclick="particleSelection(this)">Water</button>
-                <button class="steam-button" id="steam" onclick="particleSelection(this)">Steam</button>
                 <button class="oil-button" id="oil" onclick="particleSelection(this)">Oil</button>
-                <button class="plant-button" id="plant" onclick="particleSelection(this)">Plant</button>
-                <button class="fire-button" id="fire" onclick="particleSelection(this)">Fire</button>
                 <br>
+                <button class="plant-button" id="plant" onclick="particleSelection(this)">Plant</button>
+                <br>
+                <button class="fire-button" id="fire" onclick="particleSelection(this)">Fire</button>
+                <button class="steam-button" id="steam" onclick="particleSelection(this)">Steam</button>
+                <br>
+                <button class="desert-button" id="desert" onclick="particleSelection(this)">Desert</button>
                 <button class="spout-button" id="spout" onclick="particleSelection(this)">Spout</button>
                 <button class="torch-button" id="torch" onclick="particleSelection(this)">Torch</button>
+                <button class="geyser-button" id="geyser" onclick="particleSelection(this)">Geyser</button>
             </div>
             
             <canvas id="myCanvas" width="700" height="420"></canvas>

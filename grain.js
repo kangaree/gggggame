@@ -7,9 +7,14 @@ const ParticleType = {
     // Flip the last bit so it can be used as a flag for if the particle has been updated
     // This is necessary because the least significant bit is in the blue part of the hexadecimal
     WATER: 0x0000ff & 0xfffffe, 
-    STEAM : 0x00bfff & 0xfffffe,
-    OIL: 0x26142A,
+    STEAM: 0x00bfff & 0xfffffe,
+    OIL: 0x28142a,
     PLANT: 0x00ff00,
+
+    DESERT: 0xffa500,
+    SPOUT: 0x008080,
+    TORCH: 0x880000,
+    GEYSER: 0x2E0850,
 };
 
 class Particle {
@@ -24,6 +29,10 @@ class Particle {
             case ParticleType.STEAM:
             case ParticleType.OIL:
             case ParticleType.PLANT:
+            case ParticleType.DESERT:
+            case ParticleType.SPOUT:
+            case ParticleType.TORCH:
+            case ParticleType.GEYSER:
                 valid = true;
             default:
                 break;
@@ -62,6 +71,11 @@ class Particle {
     static isActiveGenerator(p) {
         let active = false;
         switch (p) {
+            case ParticleType.DESERT:
+            case ParticleType.SPOUT:
+            case ParticleType.TORCH:
+            case ParticleType.GEYSER:
+                active = true;
             default:
                 break;
         }
@@ -113,6 +127,30 @@ class Particle {
                         return [ParticleType.PLANT, ParticleType.PLANT];
                     default:
                         break;
+                }
+                break;
+
+            case ParticleType.DESERT:
+                if (q == ParticleType.EMPTY && Math.random() < 0.25) {
+                    return [ParticleType.DESERT, ParticleType.SAND];
+                }
+                break;
+
+            case ParticleType.SPOUT:
+                if (q == ParticleType.EMPTY && Math.random() < 0.25) {
+                    return [ParticleType.SPOUT, ParticleType.WATER];
+                }
+                break;
+
+            case ParticleType.TORCH:
+                if (q == ParticleType.EMPTY && Math.random() < 0.25) {
+                    return [ParticleType.TORCH, ParticleType.FIRE];
+                }
+                break;
+
+            case ParticleType.GEYSER:
+                if (q == ParticleType.EMPTY && Math.random() < 0.25) {
+                    return [ParticleType.GEYSER, ParticleType.OIL];
                 }
                 break;
 
