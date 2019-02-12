@@ -15,6 +15,8 @@ const ParticleType = {
     SPOUT: 0x008080,
     TORCH: 0x880000,
     GEYSER: 0x2E0850,
+
+    SNOW: 0xffffff & 0xfffffe,
 };
 
 class Particle {
@@ -33,6 +35,7 @@ class Particle {
             case ParticleType.SPOUT:
             case ParticleType.TORCH:
             case ParticleType.GEYSER:
+            case ParticleType.SNOW:
                 valid = true;
             default:
                 break;
@@ -47,6 +50,7 @@ class Particle {
             case ParticleType.SAND:
             case ParticleType.WATER:
             case ParticleType.OIL:
+            case ParticleType.SNOW:
                 liquid = true;
             default:
                 break;
@@ -96,6 +100,7 @@ class Particle {
                     // Condense
                     return ParticleType.WATER;
                 }
+                break;
             default:
                 break;
         }
@@ -115,6 +120,9 @@ class Particle {
                     case ParticleType.PLANT:
                         // Burn
                         return [ParticleType.FIRE, ParticleType.FIRE];
+                    case ParticleType.SNOW:
+                        // Melt
+                        return [ParticleType.FIRE, ParticleType.EMPTY];
                     default:
                         break;
                 }
