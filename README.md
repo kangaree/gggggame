@@ -1,4 +1,5 @@
-## JS Project Proposal: Gary's Groovy Gravitating Grains Game
+## Gary's Groovy Gravitating Grains Game
+![GGGGGame](https://i.imgur.com/kPitTle.png)
 
 ### Background
 
