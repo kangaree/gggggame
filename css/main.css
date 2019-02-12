@@ -256,6 +256,20 @@ canvas {
     border-radius: 5px;
 }
 
+.acid-button {
+    background-color: greenyellow;
+    border-color: greenyellow;
+    color: green;
+    border-radius: 5px;
+}
+
+.acid-button:active {
+    background-color: greenyellow;
+    border-color: greenyellow;
+    color: green;
+    border-radius: 5px;
+}
+
 
 button {
     background-color: gray;

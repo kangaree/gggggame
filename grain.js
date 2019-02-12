@@ -17,6 +17,7 @@ const ParticleType = {
     GEYSER: 0x2E0850,
 
     SNOW: 0xffffff & 0xfffffe,
+    ACID: 0xadff2f & 0xfffffe,
 };
 
 class Particle {
@@ -36,6 +37,7 @@ class Particle {
             case ParticleType.TORCH:
             case ParticleType.GEYSER:
             case ParticleType.SNOW:
+            case ParticleType.ACID:
                 valid = true;
             default:
                 break;
@@ -51,6 +53,7 @@ class Particle {
             case ParticleType.WATER:
             case ParticleType.OIL:
             case ParticleType.SNOW:
+            case ParticleType.ACID:
                 liquid = true;
             default:
                 break;
@@ -99,6 +102,12 @@ class Particle {
                 if (Math.random() < 0.01) {
                     // Condense
                     return ParticleType.WATER;
+                }
+                break;
+            case ParticleType.ACID:
+                if (Math.random() < 0.03) {
+                    // Dissolve / Dissipate
+                    return ParticleType.EMPTY;
                 }
                 break;
             default:
@@ -159,6 +168,12 @@ class Particle {
             case ParticleType.GEYSER:
                 if (q == ParticleType.EMPTY && Math.random() < 0.25) {
                     return [ParticleType.GEYSER, ParticleType.OIL];
+                }
+                break;
+
+            case ParticleType.ACID:
+                if (q !== ParticleType.ACID) {
+                    return [ParticleType.ACID, ParticleType.EMPTY];
                 }
                 break;
 
