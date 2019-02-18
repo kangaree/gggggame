@@ -208,6 +208,8 @@ class Grainbox {
         this.frameBit = 0;
 
         this.pen = ParticleType.EMPTY;
+
+        this.paused = false;
     }
 
     setImageData(imageData) {
@@ -411,6 +413,9 @@ class Grainbox {
 
         // flip (ﾉ≧∇≦)ﾉ ﾐ ┸━┸
         this.frameBit ^= 1;
+        if (this.paused) {
+            this.frameBit ^= 1;
+        }
     }
 
     erase() {
@@ -420,5 +425,9 @@ class Grainbox {
             this.data[i + 2] = 0;       // B value
             this.data[i + 3] = 0xff;    // A value
         }
+    }
+
+    pause() {
+        this.paused = !this.paused;
     }
 }

@@ -123,6 +123,10 @@
         function erase() {
             grainbox.erase();
         }
+        
+        function pause() {
+            grainbox.pause();
+        }
 
         function draw() {
 
@@ -194,7 +198,7 @@
             <canvas id="myCanvas" width="700" height="420"></canvas>
 
             <div class="buttons">
-                <button>Gravity</button>
+                <button onclick="pause()">Gravity</button>
                 <button onclick="save()">Save</button>
                 <button onclick="erase()">Reset</button>
                 <br>
