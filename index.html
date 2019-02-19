@@ -150,6 +150,8 @@
         
         function sizeSelection(obj) {
             particleSize = obj.id;
+            document.getElementById("particle-description").innerHTML = obj.id;
+            document.getElementById("particle-description").style.color = "#ffffff";
         }
         
         function erase() {
