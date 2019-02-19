@@ -40,7 +40,9 @@ main {
 }
 
 .buttons button {
-    margin-bottom: 1px;
+    margin-bottom: 2px;
+    font-size: 15px;
+    padding: 2px;
 }
 
 .buttons *:focus {
