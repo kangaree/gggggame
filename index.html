@@ -195,6 +195,22 @@
             }
         }
 
+        function playground3() {
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
+
+            base_image = new Image();
+            base_image.crossOrigin = "Anonymous"
+            base_image.src = 'https://i.imgur.com/ynrcxlk.png';
+            // base_image.src = './gggggamestate.png';
+            base_image.onload = function() {
+                ctx.drawImage(base_image, 0, 0);
+                // grainbox.setImageData(base_image);
+                imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height )
+                grainbox.setImageData(imageData);
+            }
+        }
+
         function about() {
             let canvas = document.getElementById("myCanvas");
             let ctx = canvas.getContext("2d");
@@ -296,6 +312,7 @@
                 <br>
                 <button onclick="playground()">Env 1</button>
                 <button onclick="playground2()">Env 2</button>
+                <button onclick="playground3()">Env 3</button>
             </div>
 
         </main>
