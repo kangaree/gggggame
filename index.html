@@ -150,8 +150,6 @@
         
         function sizeSelection(obj) {
             particleSize = obj.id;
-            document.getElementById("particle-description").innerHTML = obj.id;
-            document.getElementById("particle-description").style.color = "#ffffff";
         }
         
         function erase() {
@@ -266,6 +264,16 @@
 
                 grainbox.setImageData(ctx.getImageData(0, 0, canvas.width, canvas.height));
             }
+
+            // cursor
+            if (penX != -1 && penY != -1) {
+                let penSizeHalf = penSize / 2 | 0;
+                ctx.beginPath();
+                ctx.arc(penX, penY, penSize / 2, 0, 2 * Math.PI);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = "white";
+                ctx.stroke();
+            }            
 
             oldPenX = penX;
             oldPenY = penY;
