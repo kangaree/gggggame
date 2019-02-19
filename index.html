@@ -167,11 +167,25 @@
             let canvas = document.getElementById("myCanvas");
             let ctx = canvas.getContext("2d");
 
-            // ctx.clearRect(0, 0, canvas.width, canvas.height);
-
             base_image = new Image();
             base_image.crossOrigin = "Anonymous"
             base_image.src = 'https://i.imgur.com/73gHCZI.png';
+            // base_image.src = './gggggamestate.png';
+            base_image.onload = function() {
+                ctx.drawImage(base_image, 0, 0);
+                // grainbox.setImageData(base_image);
+                imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height )
+                grainbox.setImageData(imageData);
+            }
+        }
+
+        function playground2() {
+            let canvas = document.getElementById("myCanvas");
+            let ctx = canvas.getContext("2d");
+
+            base_image = new Image();
+            base_image.crossOrigin = "Anonymous"
+            base_image.src = 'https://i.imgur.com/pvbjLhp.png';
             // base_image.src = './gggggamestate.png';
             base_image.onload = function() {
                 ctx.drawImage(base_image, 0, 0);
@@ -281,6 +295,7 @@
                 <button onclick="about()">a/A</button>
                 <br>
                 <button onclick="playground()">Env 1</button>
+                <button onclick="playground2()">Env 2</button>
             </div>
 
         </main>
