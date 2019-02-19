@@ -350,15 +350,7 @@ class Grainbox {
                 let q = this.getParticle(x + dx, y + dy);
                 let type2 = q & 0xfffffe;
 
-                // Maybe remove later. This is to make particles fall faster if they have two empty spaces below.
-                let q2 = this.getParticle(x + dx, y + (2 * dy));
-                let type22 = q2 & 0xfffffe;
-
-                if (type22 == ParticleType.EMPTY && type2 == ParticleType.EMPTY) {
-                    // If both spaces are empty, than go to the second space
-                    this.updateParticle(x + dx, y + (dy * 2), type);
-                    this.updateParticle(x, y, ParticleType.EMPTY);
-                } else if (type2 == ParticleType.EMPTY) {
+                if (type2 == ParticleType.EMPTY) {
                     // Drop!
                     this.updateParticle(x + dx, y + dy, type);
                     this.updateParticle(x, y, ParticleType.EMPTY);
