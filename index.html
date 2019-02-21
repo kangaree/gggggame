@@ -33,6 +33,9 @@
             canvas.addEventListener("mouseup", mouseUp);
             canvas.addEventListener("mousemove", mouseMove);
 
+            canvas.addEventListener("touchstart", touchStart);
+            canvas.addEventListener("touchmove", touchMove);
+
             window.requestAnimationFrame(draw);
         }
 
@@ -71,7 +74,41 @@
             penX = x;
             penY = y;
         }
-        
+
+        function getTouchPos(e) {
+                if (!e)
+                    var e = event;
+
+                if (e.touches) {
+                    if (e.touches.length == 1) { // One Finger
+                        const touch = e.touches[0]; // Finger One Info
+                        penX = touch.pageX - touch.target.offsetLeft;
+                        penY = touch.pageY - touch.target.offsetTop;
+                    }
+                }
+            }
+
+        function touchStart(event) {
+            let x = event.x;
+            let y = event.y;
+
+            let canvas = document.getElementById("myCanvas");
+
+            x -= canvas.getBoundingClientRect().left;
+            y -= canvas.getBoundingClientRect().top;
+
+            penX = x;
+            penY = y;
+
+            mouseIsDown = true;
+        }
+
+        function touchMove(e) {
+            getTouchPos(e);
+
+            event.preventDefault();
+        }
+
         function particleSelection(obj) {
             
             switch (obj.id) {
