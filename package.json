@@ -1,0 +1,19 @@
+{
+  "name": "gggggame",
+  "version": "1.0.0",
+  "description": "Gary's Groovy Gravitating Grains Game",
+  "main": "gggggame.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kangaree/gggggame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kangaree/gggggame/issues"
+  },
+  "homepage": "https://github.com/kangaree/gggggame#readme"
+}

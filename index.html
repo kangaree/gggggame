@@ -6,318 +6,13 @@
         <link rel="icon" href="./favicon.ico" type="image/x-icon">
 
         <link href="https://fonts.googleapis.com/css?family=Freckle+Face" rel="stylesheet">
-        <link rel="stylesheet" href="./css/main.css" media="screen" title="no title" charset="utf-8">
+        <link rel="stylesheet" href="./main.css" media="screen" title="no title" charset="utf-8">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
             crossorigin="anonymous">
 
-        <script src="./grain.js"></script>
-        <script type="text/javascript">
-
-        // Default Particle Pen
-        let particleSelectionString = "sand";
-        let particleSize = 15;
-        let paused = false;
-
-        window.onload = function () {
-            let canvas = document.getElementById("myCanvas");
-
-            grainbox = new Grainbox(canvas);
-
-            penX = -1;
-            penY = -1;
-            oldPenX = -1;
-            oldPenY = -1;
-            mouseIsDown = false;
-
-            canvas.addEventListener("mousedown", mouseDown);
-            canvas.addEventListener("mouseup", mouseUp);
-            canvas.addEventListener("mousemove", mouseMove);
-
-            canvas.addEventListener("touchstart", touchStart);
-            canvas.addEventListener("touchmove", touchMove);
-
-            window.requestAnimationFrame(draw);
-        }
-
-
-        function mouseDown(event) {
-            let x = event.x;
-            let y = event.y;
-
-            let canvas = document.getElementById("myCanvas");
-
-            x -= canvas.getBoundingClientRect().left;
-            y -= canvas.getBoundingClientRect().top;
-
-            penX = x;
-            penY = y;
-
-            mouseIsDown = true;
-        }
-
-        function mouseUp(event) {
-            penX = -1;
-            penY = -1;
-
-            mouseIsDown = false;
-        }
-
-        function mouseMove(event) {
-            let x = event.x;
-            let y = event.y;
-
-            let canvas = document.getElementById("myCanvas");
-
-            x -= canvas.getBoundingClientRect().left;
-            y -= canvas.getBoundingClientRect().top;
-
-            penX = x;
-            penY = y;
-        }
-
-        function getTouchPos(e) {
-                if (!e)
-                    var e = event;
-
-                if (e.touches) {
-                    if (e.touches.length == 1) { // One Finger
-                        const touch = e.touches[0]; // Finger One Info
-                        penX = touch.pageX - touch.target.offsetLeft;
-                        penY = touch.pageY - touch.target.offsetTop;
-                    }
-                }
-            }
-
-        function touchStart(event) {
-            let x = event.x;
-            let y = event.y;
-
-            let canvas = document.getElementById("myCanvas");
-
-            x -= canvas.getBoundingClientRect().left;
-            y -= canvas.getBoundingClientRect().top;
-
-            penX = x;
-            penY = y;
-
-            mouseIsDown = true;
-        }
-
-        function touchMove(e) {
-            getTouchPos(e);
-
-            event.preventDefault();
-        }
-
-        function particleSelection(obj) {
-            
-            switch (obj.id) {
-                case "empty":
-                    particleSelectionString = "empty";
-                    document.getElementById("particle-description").innerHTML = "empty (erases)";
-                    document.getElementById("particle-description").style.color = "#ffffff";
-                    break;
-                case "sand":
-                    particleSelectionString = "sand";
-                    document.getElementById("particle-description").innerHTML = "sand (falls)";
-                    document.getElementById("particle-description").style.color = "#f4a460";
-                    break;
-                case "wall":
-                    particleSelectionString = "wall";
-                    document.getElementById("particle-description").innerHTML = "wall (stays)";
-                    document.getElementById("particle-description").style.color = "#808080";
-                    break;
-                case "fire":
-                    particleSelectionString = "fire";
-                    document.getElementById("particle-description").innerHTML = "fire (burns)";
-                    document.getElementById("particle-description").style.color = "#ff0000";
-                    break;
-                case "water":
-                    particleSelectionString = "water";
-                    document.getElementById("particle-description").innerHTML = "water (falls)";
-                    document.getElementById("particle-description").style.color = "#0000ff";
-                    break;
-                case "steam":
-                    particleSelectionString = "steam";
-                    document.getElementById("particle-description").innerHTML = "steam (condenses)";
-                    document.getElementById("particle-description").style.color = "#00bfff";
-                    break;
-                case "oil":
-                    particleSelectionString = "oil";
-                    document.getElementById("particle-description").innerHTML = "oil (burns)";
-                    document.getElementById("particle-description").style.color = "#28142a";
-                    break;
-                case "plant":
-                    particleSelectionString = "plant";
-                    document.getElementById("particle-description").innerHTML = "plant (grows)";
-                    document.getElementById("particle-description").style.color = "#00ff00";
-                    break;
-                case "desert":
-                    particleSelectionString = "desert";
-                    document.getElementById("particle-description").innerHTML = "desert (sands)";
-                    document.getElementById("particle-description").style.color = "#ffa500";
-                    break;
-                case "spout":
-                    particleSelectionString = "spout";
-                    document.getElementById("particle-description").innerHTML = "spout (waters)";
-                    document.getElementById("particle-description").style.color = "#008080";
-                    break;
-                case "torch":
-                    particleSelectionString = "torch";
-                    document.getElementById("particle-description").innerHTML = "torch (fires)";
-                    document.getElementById("particle-description").style.color = "#880000";
-                    break;
-                case "geyser":
-                    particleSelectionString = "geyser";
-                    document.getElementById("particle-description").innerHTML = "geyser (oils)";
-                    document.getElementById("particle-description").style.color = "#2E0850";
-                    break;
-                case "snow":
-                    particleSelectionString = "snow";
-                    document.getElementById("particle-description").innerHTML = "snow (melts)";
-                    document.getElementById("particle-description").style.color = "#ffffff";
-                    break;
-                case "acid":
-                    particleSelectionString = "acid";
-                    document.getElementById("particle-description").innerHTML = "acid (destroys)";
-                    document.getElementById("particle-description").style.color = "#adff2f";
-                    break;
-            }
-        }
-        
-        function sizeSelection(obj) {
-            particleSize = obj.id;
-        }
-        
-        function erase() {
-            grainbox.erase();
-            document.getElementById("particle-description").innerHTML = "BYE!";
-            document.getElementById("particle-description").style.color = "#ffffff";
-        }
-        
-        function pause() {
-            grainbox.pause();
-            paused = !paused;
-            paused ? document.getElementById("particle-description").innerHTML = "gravity off!" : document.getElementById("particle-description").innerHTML = "groovy gravity~";
-            document.getElementById("particle-description").style.color = "#ffffff";
-        }
-
-        function playground() {
-            let canvas = document.getElementById("myCanvas");
-            let ctx = canvas.getContext("2d");
-
-            base_image = new Image();
-            base_image.crossOrigin = "Anonymous"
-            base_image.src = 'https://i.imgur.com/73gHCZI.png';
-            // base_image.src = './gggggamestate.png';
-            base_image.onload = function() {
-                ctx.drawImage(base_image, 0, 0);
-                // grainbox.setImageData(base_image);
-                imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height )
-                grainbox.setImageData(imageData);
-            }
-        }
-
-        function playground2() {
-            let canvas = document.getElementById("myCanvas");
-            let ctx = canvas.getContext("2d");
-
-            base_image = new Image();
-            base_image.crossOrigin = "Anonymous"
-            base_image.src = 'https://i.imgur.com/pvbjLhp.png';
-            // base_image.src = './gggggamestate.png';
-            base_image.onload = function() {
-                ctx.drawImage(base_image, 0, 0);
-                // grainbox.setImageData(base_image);
-                imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height )
-                grainbox.setImageData(imageData);
-            }
-        }
-
-        function playground3() {
-            let canvas = document.getElementById("myCanvas");
-            let ctx = canvas.getContext("2d");
-
-            base_image = new Image();
-            base_image.crossOrigin = "Anonymous"
-            base_image.src = 'https://i.imgur.com/ynrcxlk.png';
-            // base_image.src = './gggggamestate.png';
-            base_image.onload = function() {
-                ctx.drawImage(base_image, 0, 0);
-                // grainbox.setImageData(base_image);
-                imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height )
-                grainbox.setImageData(imageData);
-            }
-        }
-
-        function about() {
-            let canvas = document.getElementById("myCanvas");
-            let ctx = canvas.getContext("2d");
-
-            // ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            base_image = new Image();
-            base_image.crossOrigin = "Anonymous"
-            base_image.src = 'https://i.imgur.com/obHGMZW.png';
-            // base_image.src = './gggggamestate.png';
-            base_image.onload = function() {
-                ctx.drawImage(base_image, 0, 0);
-                // grainbox.setImageData(base_image);
-                imageData = ctx.getImageData( 0, 0, canvas.width, canvas.height )
-                grainbox.setImageData(imageData);
-            }
-        }
-
-        function draw() {
-
-            grainbox.update();
-
-            let canvas = document.getElementById("myCanvas");
-            let ctx = canvas.getContext("2d");
-            ctx.putImageData(grainbox.imageData, 0, 0);
-
-            let penSize = particleSize;
-
-            if (mouseIsDown) {
-                let particleType = ParticleType[particleSelectionString.toUpperCase()];
-                grainbox.pen = particleType;
-                let color = particleType.toString(16);
-                while (color.length < 6) {
-                    // Put zeroes before if less than 6 digits (hexadecimal color value)
-                    color = "0" + color;
-                }
-                ctx.strokeStyle = "#" + color;
-
-                ctx.lineCap = "round";
-                ctx.lineWidth = penSize;
-                ctx.beginPath();
-                if (oldPenX == -1 && oldPenY == -1) {
-                    ctx.moveTo(penX, penY);
-                } else {
-                    ctx.moveTo(oldPenX, oldPenY);
-                }
-                ctx.lineTo(penX, penY);
-                ctx.stroke();
-
-                grainbox.setImageData(ctx.getImageData(0, 0, canvas.width, canvas.height));
-            }
-
-            // cursor
-            if (penX != -1 && penY != -1) {
-                let penSizeHalf = penSize / 2 | 0;
-                ctx.beginPath();
-                ctx.arc(penX, penY, penSize / 2, 0, 2 * Math.PI);
-                ctx.lineWidth = 1;
-                ctx.strokeStyle = "white";
-                ctx.stroke();
-            }            
-
-            oldPenX = penX;
-            oldPenY = penY;
-
-            window.requestAnimationFrame(draw);
-        }
-        </script>
+        <script src="./src/gggggame.js"></script>
+        <script src="./src/grain.js"></script>
+        <script src="./src/grainbox.js"></script>
     </head>
 
     <body>
@@ -325,24 +20,24 @@
         <main>
 
             <div class="buttons">
-                <button class="wall-button" id="wall" onclick="particleSelection(this)">Wall</button>
-                <button class="eraser-button" id="empty" onclick="particleSelection(this)">Eraser</button>
+                <button class="wall-button" id="wall" onclick="grainSelection(this)">Wall</button>
+                <button class="eraser-button" id="empty" onclick="grainSelection(this)">Eraser</button>
                 <br>
-                <button class="sand-button" id="sand" onclick="particleSelection(this)">Sand</button>
-                <button class="water-button" id="water" onclick="particleSelection(this)">Water</button>
-                <button class="oil-button" id="oil" onclick="particleSelection(this)">Oil</button>
-                <button class="snow-button" id="snow" onclick="particleSelection(this)">Snow</button>
-                <button class="acid-button" id="acid" onclick="particleSelection(this)">Acid</button>
+                <button class="sand-button" id="sand" onclick="grainSelection(this)">Sand</button>
+                <button class="water-button" id="water" onclick="grainSelection(this)">Water</button>
+                <button class="oil-button" id="oil" onclick="grainSelection(this)">Oil</button>
+                <button class="snow-button" id="snow" onclick="grainSelection(this)">Snow</button>
+                <button class="acid-button" id="acid" onclick="grainSelection(this)">Acid</button>
                 <br>
-                <button class="plant-button" id="plant" onclick="particleSelection(this)">Plant</button>
+                <button class="plant-button" id="plant" onclick="grainSelection(this)">Plant</button>
                 <br>
-                <button class="fire-button" id="fire" onclick="particleSelection(this)">Fire</button>
-                <button class="steam-button" id="steam" onclick="particleSelection(this)">Steam</button>
+                <button class="fire-button" id="fire" onclick="grainSelection(this)">Fire</button>
+                <button class="steam-button" id="steam" onclick="grainSelection(this)">Steam</button>
                 <br>
-                <!-- <button class="desert-button" id="desert" onclick="particleSelection(this)">Desert</button> -->
-                <button class="spout-button" id="spout" onclick="particleSelection(this)">Spout</button>
-                <button class="torch-button" id="torch" onclick="particleSelection(this)">Torch</button>
-                <!-- <button class="geyser-button" id="geyser" onclick="particleSelection(this)">Geyser</button> -->
+                <!-- <button class="desert-button" id="desert" onclick="grainSelection(this)">Desert</button> -->
+                <button class="spout-button" id="spout" onclick="grainSelection(this)">Spout</button>
+                <button class="torch-button" id="torch" onclick="grainSelection(this)">Torch</button>
+                <!-- <button class="geyser-button" id="geyser" onclick="grainSelection(this)">Geyser</button> -->
             </div>
             
             <canvas id="myCanvas" width="700" height="420"></canvas>
@@ -359,15 +54,15 @@
                 <br>
                 <button onclick="about()">a/A</button>
                 <br>
-                <button onclick="playground()">Env 1</button>
-                <button onclick="playground2()">Env 2</button>
-                <button onclick="playground3()">Env 3</button>
+                <button onclick="playground()">Demo 1</button>
+                <button onclick="playground2()">Demo 2</button>
+                <button onclick="playground3()">Demo 3</button>
             </div>
 
         </main>
 
-        <div class="particle-description-container">
-            <p id="particle-description">welcome to gggggame!</p>
+        <div class="grain-description-container">
+            <p id="grain-description">welcome to gggggame!</p>
         </div>
 
         <footer>
