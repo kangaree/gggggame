@@ -344,14 +344,16 @@ footer a {
     }
 
     .buttons button {
-        font-size: 23px;
+        font-size: 38px;
         font-weight: bold;
-        padding: 5px;
+        padding: 2px;
         margin: 5px;
-        width: 100px;
+        width: 215px;
+        height: 75px;
     }
 
     footer a * {
+        margin-top: 30px;
         height: 42px;
         font-size: 42px;
     }
