@@ -311,3 +311,41 @@ footer a {
     padding-top: none;
     border-radius: 3px;
 }
+
+@media only screen and (max-width: 1000px) {
+    h1 {
+        font-size: 75px;
+        max-width: 700px;
+        margin-top: 0;
+    }
+
+    p {
+        font-size: 30px;
+    }
+
+    .grain-description-container p {
+        font-size: 60px;
+    }
+
+    main {
+        display: block;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    br {
+        display: none;
+    }
+
+    .buttons {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .buttons button {
+        margin-bottom: 4px;
+        font-size: 30px;
+        padding: 5px;
+    }
+}
