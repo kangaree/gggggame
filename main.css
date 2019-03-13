@@ -314,7 +314,7 @@ footer a {
 
 @media only screen and (max-width: 1000px) {
     h1 {
-        font-size: 75px;
+        font-size: 60px;
         max-width: 700px;
         margin-top: 0;
     }
@@ -324,7 +324,7 @@ footer a {
     }
 
     .grain-description-container p {
-        font-size: 60px;
+        font-size: 42px;
     }
 
     main {
@@ -333,19 +333,31 @@ footer a {
         margin-bottom: 30px;
     }
 
-    br {
-        display: none;
-    }
-
     .buttons {
         margin-left: 0;
         margin-right: 0;
-        width: 100%;
+        width: 700px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: center;
     }
 
     .buttons button {
-        margin-bottom: 4px;
-        font-size: 30px;
+        font-size: 23px;
+        font-weight: bold;
         padding: 5px;
+        margin: 5px;
+        width: 100px;
+    }
+
+    footer a * {
+        height: 42px;
+        font-size: 42px;
+    }
+
+    canvas {
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 }
