@@ -14,6 +14,8 @@ window.onload = function () {
     oldPenY = -1;
     mouseIsDown = false;
 
+    playground3()
+
     canvas.addEventListener("mousedown", mouseDown);
     canvas.addEventListener("mouseup", mouseUp);
     canvas.addEventListener("mousemove", mouseMove);
